@@ -21,7 +21,7 @@ default-options: &default-options
     - circleci-infra-bot
 
 default-envs: &default-envs
-  ECR_REPO: 314716043882.dkr.ecr.us-east-1.amazonaws.com/cache-docker/proxysql
+  ECR_REPO: 314716043882.dkr.ecr.us-east-1.amazonaws.com/cache-docker/proxysql/proxysql
 
 commands:
   create-aws-profiles:
