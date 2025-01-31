@@ -9,7 +9,7 @@ executors:
       - image: debian
   amd64:
     machine: &machine
-      image: debian
+      image: ubuntu-2004:current
       docker_layer_caching: true
     resource_class: medium
   arm64:
