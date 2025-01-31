@@ -100,15 +100,15 @@ workflows:
   version: 2
   build:
     jobs:
-#      - build:
-#          <<: *default-options
-#          matrix:
-#            alias: build
-#            parameters:
-#              architecture:
-#                - amd64
-#                - arm64
+      - build:
+          <<: *default-options
+          matrix:
+            alias: build
+            parameters:
+              architecture:
+                - amd64
+                - arm64
       - push-manifest:
           <<: *default-options
-#          requires:
-#            - build
+          requires:
+            - build
