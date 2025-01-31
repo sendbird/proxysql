@@ -37,6 +37,11 @@ extern int gdbg;
 /*
 #ifdef DEBUG
 */
+// define the levels of logging messages
+const int loglevel_error = 1;
+const int loglevel_warning = 2;
+const int loglevel_info = 3;
+
 #define proxy_error(fmt, ...) \
 	do { \
 		time_t __timer; \
@@ -45,7 +50,7 @@ extern int gdbg;
 		time(&__timer); \
 		localtime_r(&__timer, &__tm_info); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", &__tm_info); \
-		proxy_error_func(0, "%s %s:%d:%s(): [ERROR] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
+		proxy_error_func(0, loglevel_error, "%s %s:%d:%s(): [ERROR] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
 	} while(0)
 
 #define proxy_error2(ecode, fmt, ...) \
@@ -56,7 +61,7 @@ extern int gdbg;
         time(&__timer); \
         localtime_r(&__timer, &__tm_info); \
         strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", &__tm_info); \
-        proxy_error_func(ecode, "%s %s:%d:%s(): [ERROR] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
+        proxy_error_func(ecode, loglevel_error, "%s %s:%d:%s(): [ERROR] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
     } while(0)
 
 #define proxy_error_inline(fi, li, fu, fmt, ...) \
@@ -67,7 +72,7 @@ extern int gdbg;
 		time(&__timer); \
 		localtime_r(&__timer, &__tm_info); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", &__tm_info); \
-		proxy_error_func(0, "%s %s:%d:%s(): [ERROR] " fmt, __buffer, fi, li, fu , ## __VA_ARGS__); \
+		proxy_error_func(0, loglevel_error, "%s %s:%d:%s(): [ERROR] " fmt, __buffer, fi, li, fu , ## __VA_ARGS__); \
 	} while(0)
 /*
 #else
@@ -94,7 +99,7 @@ extern int gdbg;
 		time(&__timer); \
 		__tm_info = localtime(&__timer); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", __tm_info); \
-		proxy_error_func(0, "%s %s:%d:%s(): [WARNING] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
+		proxy_error_func(0, loglevel_warning, "%s %s:%d:%s(): [WARNING] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
 	} while(0)
 
 #define proxy_warning2(ecode, fmt, ...) \
@@ -105,7 +110,7 @@ extern int gdbg;
 		time(&__timer); \
 		__tm_info = localtime(&__timer); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", __tm_info); \
-		proxy_error_func(ecode, "%s %s:%d:%s(): [WARNING] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
+		proxy_error_func(ecode, loglevel_warning, "%s %s:%d:%s(): [WARNING] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
 	} while(0)
 
 /*
@@ -131,7 +136,7 @@ extern int gdbg;
 		time(&__timer); \
 		__tm_info = localtime(&__timer); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", __tm_info); \
-		proxy_error_func(0, "%s %s:%d:%s(): [INFO] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
+		proxy_error_func(0, loglevel_info, "%s %s:%d:%s(): [INFO] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
 	} while(0)
 
 #define proxy_info2(ecode, fmt, ...) \
@@ -142,7 +147,7 @@ extern int gdbg;
 		time(&__timer); \
 		__tm_info = localtime(&__timer); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", __tm_info); \
-		proxy_error_func(ecode, "%s %s:%d:%s(): [INFO] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
+		proxy_error_func(ecode, loglevel_info, "%s %s:%d:%s(): [INFO] " fmt, __buffer, __FILE__, __LINE__, __func__ , ## __VA_ARGS__); \
 	} while(0)
 #else
 #define proxy_info(fmt, ...) \
@@ -153,7 +158,7 @@ extern int gdbg;
 		time(&__timer); \
 		__tm_info = localtime(&__timer); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", __tm_info); \
-		proxy_error_func(0, "%s [INFO] " fmt , __buffer , ## __VA_ARGS__); \
+		proxy_error_func(0, loglevel_info, "%s [INFO] " fmt , __buffer , ## __VA_ARGS__); \
 	} while(0)
 
 #define proxy_info2(fmt, ...) \
@@ -164,7 +169,7 @@ extern int gdbg;
 		time(&__timer); \
 		__tm_info = localtime(&__timer); \
 		strftime(__buffer, 25, "%Y-%m-%d %H:%M:%S", __tm_info); \
-		proxy_error_func(ecode, "%s [INFO] " fmt , __buffer , ## __VA_ARGS__); \
+		proxy_error_func(ecode, loglevel_info, "%s [INFO] " fmt , __buffer , ## __VA_ARGS__); \
 	} while(0)
 #endif
 
