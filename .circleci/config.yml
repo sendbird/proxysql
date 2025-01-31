@@ -99,12 +99,6 @@ workflows:
     jobs:
       - build:
           <<: *default-options
-          filters:
-            tags:
-              only:
-                - /^v.+/
-            branches:
-              ignore: /.*/
           matrix:
             alias: build
             parameters:
@@ -113,11 +107,5 @@ workflows:
                 - arm64
       - push-manifest:
           <<: *default-options
-          filters:
-            tags:
-              only:
-                - /^v.+/
-            branches:
-              ignore: /.*/
           requires:
             - build
