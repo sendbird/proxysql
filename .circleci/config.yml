@@ -6,7 +6,7 @@ orbs:
 executors:
   docker:
     docker:
-      - image: debian
+      - image: cimg/python:3.11
   amd64:
     machine: &machine
       image: ubuntu-2004:current
@@ -90,6 +90,8 @@ jobs:
       - run:
           name: Push image manifest
           command: |
+            sudo apt-get update 
+            sudo apt-get install -y curl
             aws ci-ops ecr get-login-password --profile ci-ops --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPO
             docker manifest create "$ECR_REPO:$CIRCLE_BRANCH" "$ECR_REPO:$CIRCLE_BRANCH-amd64" "$ECR_REPO:$CIRCLE_BRANCH-arm64"
             docker manifest push "$ECR_REPO:$CIRCLE_BRANCH"
