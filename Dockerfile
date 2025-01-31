@@ -1,5 +1,5 @@
 FROM debian:11
-ADD ./binaries/proxysql /
+ADD ./src/proxysql /
 MAINTAINER Peter Lyoo <peter.lyoo@sendbird.com>
 
 RUN apt-get update && \
