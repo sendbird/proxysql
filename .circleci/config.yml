@@ -54,7 +54,8 @@ commands:
           name: Build and push docker image
           command: |
             image_tag="$ECR_REPO:$CIRCLE_TAG-$ARCH"
-            apt-get install -y automake bzip2 cmake make g++ gcc git openssl libssl-dev libgnutls28-dev libtool patch uuid-dev curl git
+            sudo apt-get update
+            sudo apt-get install -y automake bzip2 cmake make g++ gcc git openssl libssl-dev libgnutls28-dev libtool patch uuid-dev curl git
             make
             docker build -f << parameters.dockerfile >> --build-arg ARCH=$ARCH . -t $image_tag
             aws ecr get-login-password --profile ci-ops --region us-east-1 | docker login --username AWS --password-stdin $image_tag
