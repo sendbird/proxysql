@@ -92,7 +92,7 @@ jobs:
           command: |
             sudo apt-get update 
             sudo apt-get install -y curl
-            aws ci-ops ecr get-login-password --profile ci-ops --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPO
+            aws ecr get-login-password --profile ci-ops --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPO
             docker manifest create "$ECR_REPO:$CIRCLE_BRANCH" "$ECR_REPO:$CIRCLE_BRANCH-amd64" "$ECR_REPO:$CIRCLE_BRANCH-arm64"
             docker manifest push "$ECR_REPO:$CIRCLE_BRANCH"
 
@@ -100,15 +100,15 @@ workflows:
   version: 2
   build:
     jobs:
-      - build:
-          <<: *default-options
-          matrix:
-            alias: build
-            parameters:
-              architecture:
-                - amd64
-                - arm64
+#      - build:
+#          <<: *default-options
+#          matrix:
+#            alias: build
+#            parameters:
+#              architecture:
+#                - amd64
+#                - arm64
       - push-manifest:
           <<: *default-options
-          requires:
-            - build
+#          requires:
+#            - build
